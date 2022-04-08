@@ -34,9 +34,8 @@
 
             // ---- TODO : Insere une nouvelle ligne avec le key/values donne dans l'array  ----
             return $this->insert(
-                "INSERT INTO entreprise ($keys) VALUES ('$values')",
-                "EntrepriseModel",
-                "SELECT * FROM entreprise"
+                "INSERT INTO entreprise ($keys) VALUES ($values)",
+                "EntrepriseModel"
             );
         }
 

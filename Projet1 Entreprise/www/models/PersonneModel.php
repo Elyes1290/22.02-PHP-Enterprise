@@ -13,7 +13,7 @@
         /**
          * ---- TODO : Montre tous les personnes, un maximum de 10 ----
          */
-        public function getAllPersonne($offset = 0, $limit = 10) {
+        public function getAllPersonnes($offset = 0, $limit = 10) {
             // ---- TODO : Montre tous les personnes ordonee para nom et maximum 10 ----
             return $this->getMany(
                 "SELECT * FROM personne ORDER BY nom ASC LIMIT $offset, $limit",

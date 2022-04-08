@@ -73,6 +73,7 @@
                 }
         
                 $keys = array_keys($body);
+                
                 $valuesToInsert = [];
                 foreach($keys as $key) {
                     if (in_array($key, [`nom`, `telephone`, `website`])) {

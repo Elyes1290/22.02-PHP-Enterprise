@@ -3,6 +3,8 @@
 // ---- TODO : Commenter ce bout de code, qu'est-ce qu'il recherche ? ----
 require_once __DIR__ . "/controllers/BaseController.php";
 require_once __DIR__ . "/controllers/PersonneController.php";
+require_once __DIR__ . "/controllers/EntrepriseController.php";
+require_once __DIR__ . "/controllers/VilleController.php";
 
 // ---- TODO : changer le path /api/users/... ----
 $routes = [
