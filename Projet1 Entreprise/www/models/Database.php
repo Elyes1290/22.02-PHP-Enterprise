@@ -144,17 +144,16 @@
     /**
      * Add a n..m relation between two table.
      * 
-     * @param string $tableName
      * @param string $id1Name
      * @param string $id2Name
      * @param string $id1Value
      * @param string $id2Value
      */
-    public function addRelation($tableName, $id1Name, $id2Name, $id1Value, $id2Value)
+    public function addRelation($values)
     {
       try {
         // Prepare the query to the statement.
-        $statement = $this->connection->prepare("SELECT * FROM $tableName WHERE $id1Name = '$id1Value' AND $id2Name = '$id2Value'");
+        $statement = $this->connection->prepare("SELECT id FROM entreprise WHERE nom = $values[0], SELECT Id FROM personne WHERE nom = $values[1]");
         // Execute the statement.
         $statement->execute();
         // Get the result.
@@ -163,7 +162,7 @@
         // Check if the relation does not exists before inserting it.
         if (!$result) {
           // Execute the query.
-          $this->connection->exec("INSERT INTO $tableName ($id1Name, $id2Name) VALUES ('$id1Value', '$id2Value')");
+          $this->connection->exec("INSERT INTO entreprise_personne ($values[2], $values[3])");
         } else {
           throw new Exception("Impossible d'ajouter la relation, car elle existe déjà.");
         }
