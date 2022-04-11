@@ -148,7 +148,7 @@
         $keys = array_keys($body);
         $valuesToUpdate = [];
         foreach($keys as $key) {
-          if (in_array($key, ['nom', 'telephone', 'email', 'profil'])) {
+          if (in_array($key, ['nom', 'lattitude', 'longitude', 'pays'])) {
             $valuesToUpdate[$key] = $body[$key];
           }
         }
