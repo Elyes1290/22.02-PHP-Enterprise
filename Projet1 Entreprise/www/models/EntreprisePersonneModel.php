@@ -3,24 +3,29 @@
 
     class EntreprisePersonneModel extends Database {
 
-        public $nom_entreprise;
-        public $nom_personne;
         public $entreprise_id;
         public $personne_id;
+        public $id;
 
         /**
          * ---- TODO : Inserer une entreprise ----
          */
-        public function insertEntreprisePersonne($array) {
-            // ---- TODO : Donne forme a l'array donnee dans les parametre ----
-            $keys = implode(", ", array_keys($array));
-            $values = implode("', '", array_values($array));
-
+        public function insertEntreprisePersonne($entreprise_id, $personne_id) {
+          
             // ---- TODO : Insere une nouvelle ligne avec le key/values donne dans l'array  ----
-            return $this->addRelation(
-                "INSERT INTO entreprise_personne ($values[2], $values[3]) VALUES ((SELECT id FROM entreprise WHERE nom = $values[0]), (SELECT Id FROM personne WHERE nom = $values[1]))",
-                "EntrepriseModel",
-                "SELECT * FROM entreprise_personne"
-            );
+            $this->addRelation('entreprise_personne', 'entreprise_id', 'personne_id', $entreprise_id, $personne_id);
+
+            return $this->getSingle("SELECT * FROM entreprise_personne");
+            
+        }
+
+        /**
+         * ---- TODO : Elimine une entreprise par son id ----
+         */
+        public function deleteEntreprisePersonne($id) {
+            // ---- Elimine une entreprise par son id ----
+            return $this->removeRelation('entreprise_personne', 'personne_id', $id);
+
+            return $this->getSingle("SELECT * FROM entreprise_personne");
         }
     }

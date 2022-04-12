@@ -13,30 +13,37 @@
                     throw new Exception("L'identifiant est incorrect ou n'a pas été spécifié");
                 }
 
-                if (!isset($body['nom_entreprise'])) {
-                    throw new Exception("Aucun nom_entreprise n'a été spécifié");
-                }
-                if (!isset($body['nom_personne'])) {
-                    throw new Exception("Aucun nom_personne n'a été spécifié");
-                }
                 if (!isset($body['entreprise_id'])) {
-                    throw new Exception("Aucun entreprise_id n'a été spécifié");
+                    throw new Exception("Aucune entreprise_id n'a été spécifié");
                 }
                 if (!isset($body['personne_id'])) {
-                    throw new Exception("Aucun personne_id n'a été spécifié");
+                    throw new Exception("Aucune personne_id n'a été spécifié");
                 }
-                
-                $keys = array_keys($body);
-                $valuesToInsert = [];
-                foreach($keys as $key) {
-                    if (in_array($key, ['nom_entreprise', 'nom_personne', 'entreprise_id', 'personne_id'])) {
-                        $valuesToInsert[$key] = $body[$key];
-                    }
+
+                $entreprisePersonne = $EntreprisePersonneModel->insertEntreprisePersonne($body['entreprise_id'], $body['personne_id']);
+        
+                $responseData = json_encode($entreprisePersonne);
+        
+                $this->sendOutput($responseData);
+            } catch (Error $e) {
+                $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                $this->sendOutput($strErrorDesc, ['Content-Type: application/json', $strErrorHeader]);
+            }
+        }
+
+        public function destroy() {
+            try {
+                $EntreprisePersonneModel = new EntreprisePersonneModel();
+        
+                $urlParams = $this->getQueryStringParams();
+                if (!isset($urlParams['id']) || !is_numeric($urlParams['id'])) {
+                    throw new Exception("L'identifiant est incorrect ou n'a pas été spécifié");
                 }
         
-                $entreprisePersonne = $EntreprisePersonneModel->insertEntreprisePersonne($valuesToInsert);
+                $entreprisePersonne = $EntreprisePersonneModel->deleteEntreprisePersonne($urlParams['id']);
         
-                $responseData = json_encode($entreprise);
+                $responseData = json_encode("L'entreprise_Personne a été correctement supprimé");
         
                 $this->sendOutput($responseData);
             } catch (Error $e) {

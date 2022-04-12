@@ -10,7 +10,7 @@ require_once __DIR__ . "/controllers/EntreprisePersonneController.php";
 // ---- TODO : changer le path /api/users/... ----
 $routes = [
   "/api/personne/list" => ['GET', 'PersonneController', 'getList'],
-  "/api/personne/get" => ['GET', 'PersonneController', 'get'],
+  "/api/personne/:id" => ['GET', 'PersonneController', 'get'],
   "/api/personne/add" => ['POST', 'PersonneController', 'store'],
   "/api/personne/update" => ['PUT', 'PersonneController', 'update'],
   "/api/personne/remove" => ['DELETE', 'PersonneController', 'destroy'],
@@ -28,4 +28,5 @@ $routes = [
   "/api/ville/remove" => ['DELETE', 'VilleController', 'destroy'],
 
   "/api/entreprisepersonne/add" => ['POST', 'EntreprisePersonneController', "store"],
+  "/api/entreprisepersonne/remove" => ['DELETE', 'EntreprisePersonneController', 'destroy'],
 ];
