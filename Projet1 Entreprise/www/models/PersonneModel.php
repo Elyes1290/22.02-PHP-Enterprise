@@ -8,7 +8,7 @@ class PersonneModel extends Database
   public $telephone;
   public $email;
   public $profile;
-  public $ville_id;
+  public $personne_ville;
 
   /**
    * ---- TODO : Montre tous les users, un maximum de 10 ----
@@ -83,5 +83,21 @@ class PersonneModel extends Database
       "SELECT id FROM personne WHERE id=$id"
     );
   }
-
+  public function selectPersonneInfoVilleEntreprise(){
+     return $this->getMany("SELECT personne.id,personne.nom, personne.telephone, personne.email, personne.profile, ville.nom as ville, entreprise.nom
+     as entreprise
+     FROM personne
+     INNER JOIN ville ON ville.id = personne.ville_id
+     INNER JOIN entreprise_personne ON entreprise_personne.personne_id = personne.id
+     INNER JOIN entreprise  ON entreprise.id = entreprise_personne.entreprise_id
+     ORDER BY personne.nom ASC LIMIT 10 OFFSET 0 ;","PersonneModel");
+   
+  }
+// SELECT p.nom, p.telephone, p.email, p.profile, v.nom as ville, e.nom
+// as entreprise
+// FROM personne p
+// INNER JOIN ville v ON v.id = p.ville_id
+// INNER JOIN entreprise_personne ep ON ep.personne_id = p.id
+// INNER JOIN entreprise e ON e.id = ep.entreprise_id
+// ORDER BY p.nom ASC LIMIT $offset, $limit
 }

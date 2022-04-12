@@ -20,16 +20,20 @@ $routes = [
   "/api/personne/add" => ['POST', 'PersonneController', 'store'],
   "/api/personne/update" => ['PUT', 'PersonneController', 'update'],
   "/api/personne/remove" => ['DELETE', 'PersonneController', 'destroy'],
+  "/api/personne/selection2"=>['GET', 'PersonneController', 'selection02'],
   // routes entreprise
   "/api/entreprise/list" => ['GET', 'EntrepriseController', 'getList'],
   "/api/entreprise/get" => ['GET', 'EntrepriseController', 'get'],
   "/api/entreprise/add" => ['POST', 'EntrepriseController', 'store'],
   "/api/entreprise/update" => ['PUT', 'EntrepriseController', 'update'],
   "/api/entreprise/remove" => ['DELETE', 'EntrepriseController', 'destroy'],
+  "/api/entreprise/selection1"=>['GET', 'EntrepriseController', 'selection01'],
+  
   // routes ville
   "/api/ville/list" => ['GET', 'VilleController', 'getList'],
   "/api/ville/get" => ['GET', 'VilleController', 'get'],
   "/api/ville/add" => ['POST', 'VilleController', 'store'],
   "/api/ville/update" => ['PUT', 'VilleController', 'update'],
   "/api/ville/remove" => ['DELETE', 'VilleController', 'destroy'],
+  "/api/ville/selection3" => ['GET', 'VilleController', 'selection03'],
 ];

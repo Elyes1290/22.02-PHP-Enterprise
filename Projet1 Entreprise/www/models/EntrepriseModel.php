@@ -7,6 +7,7 @@ class EntrepriseModel extends Database
   public $nom;
   public $telephone;
   public $website;
+  public $person;
   
 
   /**
@@ -82,5 +83,20 @@ class EntrepriseModel extends Database
       "SELECT id FROM entreprise WHERE id=$id"
     );
   }
+//   SELECT e.nom, e.telephone, e.website, p.nom FROM entreprise e
+// INNER JOIN entreprise_personne ep ON ep.entreprise_id = e.id
+// INNER JOIN personne p ON p.id = ep.personne_id
+// WHERE e.id = $entrepriseID
+  public function selectEntrepriseInfoAndPersonneName($id){
+      // 
+    return $this->getSingle("SELECT DISTINCT entreprise.id, entreprise.nom, entreprise.telephone, 
+    entreprise.website, personne.nom as person FROM entreprise 
+    INNER JOIN entreprise_personne ON entreprise.id = entreprise_personne.entreprise_id 
+    INNER JOIN personne ON entreprise_personne.personne_id = personne.id 
+    WHERE entreprise.id=$id;",
+      "EntrepriseModel");
+      
+  }
 
+ 
 }

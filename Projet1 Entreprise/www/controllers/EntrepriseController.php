@@ -1,7 +1,7 @@
 <?php
-   require_once __DIR__ . "/../models/PersonneModel.php";
+  require_once __DIR__ . "/../models/EntrepriseModel.php";
 
-  class PersonneController extends BaseController
+  class EntrepriseController extends BaseController
   {
 
     /**
@@ -10,7 +10,7 @@
     public function getList() {
       try {
         // ---- TODO : Creer un nouveau user ----
-        $personneModel = new PersonneModel();
+        $entrepriseModel = new EntrepriseModel();
 
         // ---- TODO :   ----
         $limit = 10;
@@ -27,10 +27,10 @@
         }
 
         // ---- TODO : declare une variable users equal a la method getAllusers ----
-        $personnes = $personneModel->getAllUsers($offset, $limit);
+        $entreprise = $entrepriseModel->getListEntreprise($offset, $limit);
 
         // ---- TODO : Retourne la representation JSON de la valeur donnee  ----
-        $responseData = json_encode($personnes);
+        $responseData = json_encode($entreprise);
 
         // ---- TODO : valeur de sorti = la liste de users passe par JSON ----
         $this->sendOutput($responseData);
@@ -48,7 +48,7 @@
     public function get() {
       try {
         // ---- TODO : creer un object de la class UserModel ----
-        $personneModel =  new PersonneModel();
+        $entrepriseModel = new EntrepriseModel();
 
         // ---- TODO :  ----
         $urlParams = $this->getQueryStringParams();
@@ -57,10 +57,10 @@
         }
 
         // ---- TODO : Commenter ce bout de code ----
-        $personne = $personneModel->getSingleUser($urlParams['id']);
+        $entreprise = $entrepriseModel->getSingleEntreprise($urlParams['id']);
 
         // ---- TODO : Commenter ce bout de code ----
-        $responseData = json_encode($personne);
+        $responseData = json_encode($entreprise);
 
         // ---- TODO : Commenter ce bout de code ----
         $this->sendOutput($responseData);
@@ -78,7 +78,7 @@
     public function store() {
       try {
         // ---- TODO : Commenter ce bout de code ----
-        $personneModel = new PersonneModel();
+        $entrepriseModel = new EntrepriseModel();
 
         // ---- TODO : Commenter ce bout de code ----
         $body = $this->getBody();
@@ -93,30 +93,26 @@
         if (!isset($body['telephone'])) {
           throw new Exception("Aucun téléphone n'a été spécifié");
         }
-        if (!isset($body['email'])) {
-          throw new Exception("Aucun e-mail n'a été spécifié");
+        if (!isset($body['website'])) {
+          throw new Exception("Aucun website n'a été spécifié");
         }
-        if (!isset($body['profile'])) {
-          throw new Exception("Aucun profil n'a été spécifié");
-        }
-        if (!isset($body['ville_id'])) {
-          throw new Exception("Aucun ville_id n'a été spécifié");
-        }
+        
+        
 
         // ---- TODO : Commenter ce bout de code ----
         $keys = array_keys($body);
         $valuesToInsert = [];
         foreach($keys as $key) {
-          if (in_array($key, ['nom', 'telephone', 'email', 'profile','ville_id'])) {
+          if (in_array($key, ['nom', 'telephone', 'email', 'profil'])) {
             $valuesToInsert[$key] = $body[$key];
           }
         }
 
         // ---- TODO : Commenter ce bout de code ----
-        $personne = $personneModel->insertPersonne($valuesToInsert);
+        $entreprise = $entrepriseModel->insertEntreprise($valuesToInsert);
 
         // ---- TODO : Commenter ce bout de code ----
-        $responseData = json_encode($personne);
+        $responseData = json_encode($entreprise);
 
         // ---- TODO : Commenter ce bout de code ----
         $this->sendOutput($responseData);
@@ -134,7 +130,7 @@
     public function update() {
       try {
         // ---- TODO : Commenter ce bout de code ----
-        $personneModel = new PersonneModel();
+        $entrepriseModel = new EntrepriseModel();
 
         // ---- TODO : Commenter ce bout de code ----
         $body = $this->getBody();
@@ -151,16 +147,16 @@
         $keys = array_keys($body);
         $valuesToUpdate = [];
         foreach($keys as $key) {
-          if (in_array($key, ['nom', 'telephone', 'email', 'profil','ville_id'])) {
+          if (in_array($key, ['nom', 'telephone', 'email', 'profil'])) {
             $valuesToUpdate[$key] = $body[$key];
           }
         }
 
         // ---- TODO : Commenter ce bout de code ----
-        $personne = $personneModel->updatePersonne($valuesToUpdate, $body['id']);
+        $entreprise = $entrepriseModel->updateEntreprise($valuesToUpdate, $body['id']);
 
         // ---- TODO : Commenter ce bout de code ----
-        $responseData = json_encode($personne);
+        $responseData = json_encode($entreprise);
 
         // ---- TODO : Commenter ce bout de code ----
         $this->sendOutput($responseData);
@@ -178,7 +174,7 @@
     public function destroy() {
       try {
         // ---- TODO : Commenter ce bout de code ----
-        $personneModel = new PersonneModel();
+        $entrepriseModel = new EntrepriseModel();
 
         // ---- TODO : Commenter ce bout de code ----
         $urlParams = $this->getQueryStringParams();
@@ -187,7 +183,7 @@
         }
 
         // ---- TODO : Commenter ce bout de code ----
-        $personne = $personneModel->deleteUser($urlParams['id']);
+        $entreprise = $entrepriseModel->deleteEntreprise($urlParams['id']);
 
         // ---- TODO : Commenter ce bout de code ----
         $responseData = json_encode("L'utilisateur a été correctement supprimé");
@@ -200,6 +196,22 @@
         $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
         $this->sendOutput($strErrorDesc, ['Content-Type: application/json', $strErrorHeader]);
       }
+    }
+    public function selection01(){
+      $entrepriseModel = new EntrepriseModel();
+      $urlParams = $this->getQueryStringParams();
+      if (!isset($urlParams['id']) || !is_numeric($urlParams['id'])) {
+        throw new Exception("L'identifiant est incorrect ou n'a pas été spécifié");
+      }
+      $entreprise = $entrepriseModel->selectEntrepriseInfoAndPersonneName($urlParams['id']);
+      // $responseData = json_encode("La selection a été crée");
+
+       $responseData = json_encode($entreprise);
+
+      // ---- TODO : Commenter ce bout de code ----
+      $this->sendOutput($responseData);
+   
+
     }
 
   }

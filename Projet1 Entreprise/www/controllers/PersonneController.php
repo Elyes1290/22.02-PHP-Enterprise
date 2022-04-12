@@ -1,7 +1,7 @@
 <?php
-  require_once __DIR__ . "/../models/VilleModel.php";
+   require_once __DIR__ . "/../models/PersonneModel.php";
 
-  class VilleController extends BaseController
+  class PersonneController extends BaseController
   {
 
     /**
@@ -10,7 +10,7 @@
     public function getList() {
       try {
         // ---- TODO : Creer un nouveau user ----
-        $villeModel = new VilleModel();
+        $personneModel = new PersonneModel();
 
         // ---- TODO :   ----
         $limit = 10;
@@ -27,10 +27,10 @@
         }
 
         // ---- TODO : declare une variable users equal a la method getAllusers ----
-        $villes = $villeModel->getAllVilles($offset, $limit);
+        $personnes = $personneModel->getAllUsers($offset, $limit);
 
         // ---- TODO : Retourne la representation JSON de la valeur donnee  ----
-        $responseData = json_encode($villes);
+        $responseData = json_encode($personnes);
 
         // ---- TODO : valeur de sorti = la liste de users passe par JSON ----
         $this->sendOutput($responseData);
@@ -48,7 +48,7 @@
     public function get() {
       try {
         // ---- TODO : creer un object de la class UserModel ----
-        $villeModel = new VilleModel();
+        $personneModel =  new PersonneModel();
 
         // ---- TODO :  ----
         $urlParams = $this->getQueryStringParams();
@@ -57,10 +57,10 @@
         }
 
         // ---- TODO : Commenter ce bout de code ----
-        $ville = $villeModel->getSingleVille($urlParams['id']);
+        $personne = $personneModel->getSingleUser($urlParams['id']);
 
         // ---- TODO : Commenter ce bout de code ----
-        $responseData = json_encode($ville);
+        $responseData = json_encode($personne);
 
         // ---- TODO : Commenter ce bout de code ----
         $this->sendOutput($responseData);
@@ -78,7 +78,7 @@
     public function store() {
       try {
         // ---- TODO : Commenter ce bout de code ----
-        $villeModel = new VilleModel();
+        $personneModel = new PersonneModel();
 
         // ---- TODO : Commenter ce bout de code ----
         $body = $this->getBody();
@@ -90,30 +90,33 @@
         if (!isset($body['nom'])) {
           throw new Exception("Aucun nom n'a été spécifié");
         }
-        if (!isset($body['lattitude'])) {
-          throw new Exception("Aucun lattitude n'a été spécifié");
+        if (!isset($body['telephone'])) {
+          throw new Exception("Aucun téléphone n'a été spécifié");
         }
-        if (!isset($body['longitude'])) {
-          throw new Exception("Aucun longitude n'a été spécifié");
+        if (!isset($body['email'])) {
+          throw new Exception("Aucun e-mail n'a été spécifié");
         }
-        if (!isset($body['pays'])) {
-          throw new Exception("Aucun pays n'a été spécifié");
+        if (!isset($body['profile'])) {
+          throw new Exception("Aucun profil n'a été spécifié");
+        }
+        if (!isset($body['ville_id'])) {
+          throw new Exception("Aucun ville_id n'a été spécifié");
         }
 
         // ---- TODO : Commenter ce bout de code ----
         $keys = array_keys($body);
         $valuesToInsert = [];
         foreach($keys as $key) {
-          if (in_array($key, ['nom', 'lattitude', 'longitude', 'pays'])) {
+          if (in_array($key, ['nom', 'telephone', 'email', 'profile','ville_id'])) {
             $valuesToInsert[$key] = $body[$key];
           }
         }
 
         // ---- TODO : Commenter ce bout de code ----
-        $ville = $villeModel->insertVille($valuesToInsert);
+        $personne = $personneModel->insertPersonne($valuesToInsert);
 
         // ---- TODO : Commenter ce bout de code ----
-        $responseData = json_encode($ville);
+        $responseData = json_encode($personne);
 
         // ---- TODO : Commenter ce bout de code ----
         $this->sendOutput($responseData);
@@ -131,7 +134,7 @@
     public function update() {
       try {
         // ---- TODO : Commenter ce bout de code ----
-        $villeModel = new VilleModel();
+        $personneModel = new PersonneModel();
 
         // ---- TODO : Commenter ce bout de code ----
         $body = $this->getBody();
@@ -148,16 +151,16 @@
         $keys = array_keys($body);
         $valuesToUpdate = [];
         foreach($keys as $key) {
-          if (in_array($key, ['nom', 'lattitude', 'longitude', 'pays'])) {
+          if (in_array($key, ['nom', 'telephone', 'email', 'profil','ville_id'])) {
             $valuesToUpdate[$key] = $body[$key];
           }
         }
 
         // ---- TODO : Commenter ce bout de code ----
-        $ville = $villeModel->updateVille($valuesToUpdate, $body['id']);
+        $personne = $personneModel->updatePersonne($valuesToUpdate, $body['id']);
 
         // ---- TODO : Commenter ce bout de code ----
-        $responseData = json_encode($ville);
+        $responseData = json_encode($personne);
 
         // ---- TODO : Commenter ce bout de code ----
         $this->sendOutput($responseData);
@@ -175,7 +178,7 @@
     public function destroy() {
       try {
         // ---- TODO : Commenter ce bout de code ----
-        $villeModel = new VilleModel();
+        $personneModel = new PersonneModel();
 
         // ---- TODO : Commenter ce bout de code ----
         $urlParams = $this->getQueryStringParams();
@@ -184,7 +187,7 @@
         }
 
         // ---- TODO : Commenter ce bout de code ----
-        $ville = $villeModel->deleteVille($urlParams['id']);
+        $personne = $personneModel->deleteUser($urlParams['id']);
 
         // ---- TODO : Commenter ce bout de code ----
         $responseData = json_encode("L'utilisateur a été correctement supprimé");
@@ -198,5 +201,20 @@
         $this->sendOutput($strErrorDesc, ['Content-Type: application/json', $strErrorHeader]);
       }
     }
+    public function selection02(){
+      $personneModel = new PersonneModel();
+      $urlParams = $this->getQueryStringParams();
+      if (!isset($urlParams['id']) || !is_numeric($urlParams['id'])) {
+        throw new Exception("L'identifiant est incorrect ou n'a pas été spécifié");
+      }
+      $personne = $personneModel->selectPersonneInfoVilleEntreprise($urlParams['id']);
+       //$responseData = json_encode("La selection a été crée");
 
+        $responseData = json_encode($personne);
+
+      // ---- TODO : Commenter ce bout de code ----
+      $this->sendOutput($responseData);
+   
+
+    }
   }

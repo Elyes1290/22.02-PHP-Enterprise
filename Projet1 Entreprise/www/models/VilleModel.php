@@ -82,5 +82,13 @@ class VilleModel extends Database
       "SELECT id FROM ville WHERE id=$id"
     );
   }
+  public function selectInfoFromVille($id){
+  return $this->getMany(
+    "SELECT personne.nom, personne.telephone, personne.email, personne.profile, ville.nom as ville
+     FROM ville 
+     INNER JOIN personne  ON personne.ville_id = ville.id
+      WHERE ville.id = $id","VilleModel");
+      }
 
 }
+
