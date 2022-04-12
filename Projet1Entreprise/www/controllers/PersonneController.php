@@ -99,7 +99,7 @@
         if (!isset($body['profile'])) {
           throw new Exception("Aucun profil n'a été spécifié");
         }
-        if (!isset($body['ville'])) {
+        if (!isset($body['ville_id'])) {
           throw new Exception("Aucun ville_id n'a été spécifié");
         }
 
@@ -107,7 +107,7 @@
         $keys = array_keys($body);
         $valuesToInsert = [];
         foreach($keys as $key) {
-          if (in_array($key, ['nom', 'telephone', 'email', 'profil'])) {
+          if (in_array($key, ['nom', 'telephone', 'email', 'profile','ville_id'])) {
             $valuesToInsert[$key] = $body[$key];
           }
         }
