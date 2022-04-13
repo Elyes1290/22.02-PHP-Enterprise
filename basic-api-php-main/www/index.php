@@ -13,7 +13,7 @@
     exit();
   }
 
-  // ---- TODO : No se lo que hace, a lo mejor cambiar ----
+  // ---- TODO : Commenter ce bout de code ----
   $className = $routes[$uri][1];
   $methodeName = $routes[$uri][2];
   $objController = new $className();
