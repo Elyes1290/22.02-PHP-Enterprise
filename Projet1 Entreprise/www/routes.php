@@ -3,6 +3,9 @@
 // ---- TODO : Commenter ce bout de code, qu'est-ce qu'il recherche ? ----
 require_once __DIR__ . "/controllers/BaseController.php";
 require_once __DIR__ . "/controllers/PersonneController.php";
+require_once __DIR__ . "/controllers/EntrepriseController.php";
+require_once __DIR__ . "/controllers/VilleController.php";
+require_once __DIR__ . "/controllers/EntreprisePersonneController.php";
 
 // ---- TODO : changer le path /api/users/... ----
 $routes = [
@@ -23,4 +26,7 @@ $routes = [
   "/api/ville/add" => ['POST', 'VilleController', 'store'],
   "/api/ville/update" => ['PUT', 'VilleController', 'update'],
   "/api/ville/remove" => ['DELETE', 'VilleController', 'destroy'],
+
+  "/api/entreprisepersonne/add" => ['POST', 'EntreprisePersonneController', "store"],
+  "/api/entreprisepersonne/remove" => ['DELETE', 'EntreprisePersonneController', 'destroy'],
 ];

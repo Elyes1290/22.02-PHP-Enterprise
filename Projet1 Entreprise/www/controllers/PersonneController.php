@@ -19,7 +19,7 @@
                     $offset = ($urlParams['page'] - 1) * $limit;
                 }
 
-                $personnes = $personneModel->getAllPersonnes($offset, $limit);
+                $personnes = $personneModel->getAllPersonne($offset, $limit);
 
                 $responseData = json_encode($personnes);
 
@@ -73,14 +73,14 @@
                 if (!isset($body['profile'])) {
                     throw new Exception("Aucun profile n'a été spécifié");
                 }
-                if (!isset($body['ville'])) {
+                if (!isset($body['ville_id'])) {
                     throw new Exception("Aucune ville n'a été spécifié");
                 }
 
                 $keys = array_keys($body);
                 $valuesToInsert = [];
                 foreach($keys as $key) {
-                    if (in_array($key, [`nom`, `telephone`, `email`, `profile`, `ville`])) {
+                    if (in_array($key, ['nom', 'telephone', 'email', 'profile', 'ville_id'])) {
                     $valuesToInsert[$key] = $body[$key];
                     }
                 }
@@ -113,7 +113,7 @@
                 $keys = array_keys($body);
                 $valuesToUpdate = [];
                 foreach($keys as $key) {
-                    if (in_array($key, [`nom`, `telephone`, `email`, `profile`, `ville`])) {
+                    if (in_array($key, ['nom', 'telephone', 'email', 'profile', 'ville_id'])) {
                     $valuesToUpdate[$key] = $body[$key];
                     }
                 }

@@ -78,7 +78,7 @@
                 $keys = array_keys($body);
                 $valuesToInsert = [];
                 foreach($keys as $key) {
-                    if (in_array($key, [ `nom`, `lattitude`, `longitude`, `pays`])) {
+                    if (in_array($key, ['nom','lattitude','longitude','pays'])) {
                         $valuesToInsert[$key] = $body[$key];
                     }
                 }
@@ -111,7 +111,7 @@
                 $keys = array_keys($body);
                 $valuesToUpdate = [];
                 foreach($keys as $key) {
-                    if (in_array($key, [`nom`, `lattitude`, `longitude`, `pays`])) {
+                    if (in_array($key, ['nom', 'lattitude', 'longitude', 'pays'])) {
                         $valuesToUpdate[$key] = $body[$key];
                     }
                 }
